@@ -1,0 +1,37 @@
+=================================================================================================================
+Script Purpose : 
+  this scrpt ceates a new datbase named 'DataWarehouse' after checking if it already exist.
+  if the database exists, it is droped  and recreated . Additionaly the script sets up three schemas 
+  within the databae "bronze , "silver" , "gold".
+==================================================================================================================
+Warning:
+  Running this script will drop the entire "dataWarehouse" if exists.
+  All data in the database will be permanently deleted.Processed with caution and 
+  ensure you have a proper backup before running this script.
+  
+use master
+go
+--drop and recreate the data warehouse.
+
+if exists (select 1 from sys.databses where name = 'datawarehouse')
+
+begin 
+		alter database warehouse set single_user with rollback immediate;
+		drop database datawarehouse
+end
+go
+
+--creating database 
+	create database datawarehouse;
+
+--use database which is created named datawarehouse 
+
+	use datawarehouse;
+
+-- create schema for the project 
+
+create schema bronze;
+go
+create schema silver;
+go
+create schema gold;
